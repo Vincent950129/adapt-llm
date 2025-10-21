@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9FSWW4E5ME"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-9FSWW4E5ME');
+</script>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Post-training of Large Language Models - Research Papers and Tutorials">
+  <meta name="keywords" content="LLM, Adaptation, Tutorial, Research">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Post-training of Large Language Models - Research Papers and Tutorials
+  </title>
+
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+<style>
+    .publication-authors {
+        width: 100%;
+        text-align: center;
+    }
+    .author-block img {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+    .author-block {
+        display: inline-block;
+        margin: 10px;
+    }
+    .author-name {
+        display: block;
+        margin-top: 5px;
+        text-decoration: none;
+        color: black;
+    }
+    /* Ensure superscript styling */
+    sup {
+        vertical-align: super;
+        font-size: smaller;
+    }
+    
+    /* Project card styling */
+    .project-card {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 2rem;
+        margin-bottom: 2rem;
+        transition: transform 0.2s ease-in-out;
+    }
+    .project-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+    .project-title {
+        color: #3273dc;
+        text-decoration: none;
+        font-weight: 600;
+    }
+    .project-title:hover {
+        color: #2366d1;
+    }
+    .project-links {
+        margin-top: 1rem;
+    }
+    .project-links a {
+        margin-right: 1rem;
+        color: #3273dc;
+        text-decoration: none;
+        font-weight: 500;
+    }
+    .project-links a:hover {
+        text-decoration: underline;
+    }
+    
+    /* Project author styling */
+    .project-authors {
+        margin: 1rem 0;
+        text-align: left;
+    }
+    .project-authors .author-block {
+        display: inline-block;
+        margin: 5px 8px;
+        text-align: center;
+        vertical-align: top;
+    }
+    .project-authors .author-block img {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+    .project-authors .author-name {
+        display: block;
+        margin-top: 3px;
+        font-size: 0.9rem;
+        text-decoration: none;
+        color: #3273dc;
+        font-weight: 500;
+    }
+    .project-authors .author-name:hover {
+        color: #2366d1;
+        text-decoration: underline;
+    }
+    
+    /* Enhanced hero section styling */
+    .hero {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+    }
+    .hero .title {
+        color: white;
+        margin-bottom: 1rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+    }
+    .hero .subtitle {
+        color: rgba(255, 255, 255, 0.9);
+        font-weight: 400;
+        margin-bottom: 2rem;
+    }
+    
+    /* Enhanced introduction section */
+    .intro-section {
+        background: #f8f9fa;
+        border-left: 4px solid #3273dc;
+        padding: 2rem;
+        border-radius: 8px;
+        margin: 2rem 0;
+    }
+    .intro-section .title {
+        color: #2c3e50;
+        margin-bottom: 1.5rem;
+    }
+    .intro-section p {
+        font-size: 1.1rem;
+        line-height: 1.7;
+        color: #555;
+    }
+    .highlight-text {
+        color: #3273dc;
+        font-weight: 600;
+    }
+</style>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+</nav>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">
+            🚀 Post-training of Large Language Models
+            </h1>
+            <h2 class="subtitle is-3">
+              Research Papers and Tutorials
+            </h2>
+            <p class="subtitle is-5" style="margin-top: 1rem; opacity: 0.9;">
+              Advancing LLM capabilities through specialized post-training techniques
+            </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <div class="intro-section">
+          <h2 class="title is-3">🎯 About Our Research</h2>
+          <div class="content has-text-justified">
+            <p>
+              <span class="highlight-text">Post-training of Large Language Models (LLMs)</span> has emerged as a transformative approach for developing specialized AI systems. This research hub serves as a comprehensive repository showcasing our cutting-edge work in LLM adaptation techniques.
+            </p>
+            <p>
+              Our research encompasses <strong>innovative post-training methodologies</strong>, including novel data curation strategies, advanced model training recipes, and pioneering adaptation algorithms. We focus on bridging the gap between general-purpose LLMs and specialized excellence through systematic research and practical implementations.
+            </p>
+            <div style="margin-top: 1.5rem; padding: 1rem; background: rgba(50, 115, 220, 0.1); border-radius: 6px;">
+              <strong>🔬 Key Research Areas:</strong>
+              <ul style="margin-top: 0.5rem; margin-left: 1rem;">
+                <li>Domain-adaptive post-training</li>
+                <li>Continual learning, knowledge retention, and transfer</li>
+                <li>Parametric post-training and retrieval-augmented post-training</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Papers & Tutorials</h2>
+    
+        <!-- Project Placeholder 1 -->
+        <div class="project-card">
+          <h3 class="title is-4">
+            <a href="findap.html" class="project-title">
+              Demystifying Domain-adaptive Post-training for Financial LLMs
+            </a>
+          </h3>
+          <div class="project-authors">
+            <div class="author-block">
+              <img src="profile/zixuan.jpg" alt="Zixuan Ke">
+              <a href="https://vincent950129.github.io/" class="author-name">Zixuan Ke</a>
+            </div>
+            <div class="author-block">
+              <img src="profile/yifei.jpg" alt="Yifei Ming">
+              <a href="https://alvinmingsf.github.io/" class="author-name">Yifei Ming</a>
+            </div>
+            <div class="author-block">
+              <img src="profile/phi.png" alt="Xuan-Phi Nguyen">
+              <a href="https://nxphi47.github.io/" class="author-name">Xuan-Phi Nguyen</a>
+            </div>
+            <div class="author-block">
+              <img src="profile/caiming.jpg" alt="Caiming Xiong">
+              <a href="http://cmxiong.com/" class="author-name">Caiming Xiong</a>
+            </div>
+            <div class="author-block">
+              <img src="profile/shafiq.jpg" alt="Shafiq Joty">
+              <a href="https://raihanjoty.github.io/" class="author-name">Shafiq Joty</a>
+            </div>
+          </div>
+          <div class="content">
+            <p>
+              Comprehensive experiments on domain-adaptive post-training of financial LLMs. We aim to answer the following questions: Given a strong general-purpose LLM (e.g., Llama3-8b-inst), how can we effectively adapt it to a target domain (e.g., finance) through post-training? What criteria are desirable for successful adaptation? What are the most effective training recipes with respect to data and model?
+            </p>
+            <p><strong>Published:</strong> <em>EMNLP</em>, 2025 🏅 <strong style="color:red;">Oral (Top 50% of accepted papers) </strong></p>
+            <div class="project-links">
+              <a href="findap.html">[Project Page]</a>
+              <a href="https://arxiv.org/abs/2501.04961">[Paper]</a>
+              <a href="https://huggingface.co/datasets/Salesforce/FinEval">[FinEval]</a>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- NAACL 2025 Tutorial -->
+        <div class="project-card">
+          <h3 class="title is-4">
+            <a href="naacl25_tutorial.html" class="project-title">
+              NAACL 2025 Tutorial: Adaptation of Large Language Models
+            </a>
+          </h3>
+          <div class="project-authors">
+            <div class="author-block">
+              <img src="profile/zixuan.jpg" alt="Zixuan Ke">
+              <a href="https://vincent950129.github.io/" class="author-name">Zixuan Ke</a>
+            </div>
+            <div class="author-block">
+              <img src="profile/yifei.jpg" alt="Yifei Ming">
+              <a href="https://alvinmingsf.github.io/" class="author-name">Yifei Ming</a>
+            </div>
+            <div class="author-block">
+              <img src="profile/shafiq.jpg" alt="Shafiq Joty">
+              <a href="https://raihanjoty.github.io/" class="author-name">Shafiq Joty</a>
+            </div>
+          </div>
+          <div class="content">
+            <p>
+              A comprehensive tutorial on adaptation of Large Language Models, covering both parametric and 
+              semi-parametric knowledge adaptation techniques. Presented at NAACL 2025.
+            </p>
+            <p><strong>Tutorial:</strong> Saturday May 3, 2:00-5:30pm @ NAACL25, New Mexico Convention Center</p>
+            <div class="project-links">
+              <a href="naacl25_tutorial.html">[Tutorial Page]</a>
+              <a href="https://us06web.zoom.us/rec/play/l0bQo739BvbUc5w7KHcNkOv2K4ay5excl4rvp8jxgdrPRNlfS-wN47vdXWIAIOIcQoW_4_A9fnNYEJJk.Hw7BpCvI8l180UXk?accessLevel=meeting&canPlayFromShare=true&from=share_recording_detail&continueMode=true&componentName=rec-play&originRequestUrl=https%3A%2F%2Fus06web.zoom.us%2Frec%2Fshare%2FlOHlVBfgRyc_NNbCF64fKLwDEzU2OiRI4MoyYTdPpUft5lvYmxQLJXZUA-_97Ce3.h69HoHG8FNm7Zebc">[Recording]</a>
+              <a href="https://arxiv.org/pdf/2504.03931">[Proposal]</a>
+              <a href="pdf/[All] NAACL25 Tutorial_ Adaptation of LLMs.pdf">[Slides]</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project Placeholder 2 -->
+        <div class="project-card">
+          <h3 class="title is-4">
+            <a href="#" class="project-title">
+              Bridging the Preference Gap between Retrievers and LLMs
+            </a>
+          </h3>
+          <div class="project-authors">
+            <div class="author-block">
+              <img src="profile/zixuan.jpg" alt="Zixuan Ke">
+              <a href="https://vincent950129.github.io/" class="author-name">Zixuan Ke</a>
+            </div>
+            <div class="author-block">
+              <img src="profile/weize.jpeg" alt="Weize Kong">
+              <a href="https://sites.google.com/site/weizekong/homewe" class="author-name">Weize Kong</a>
+            </div>
+            <div class="author-block">
+              <img src="profile/chengli.png" alt="Cheng Li">
+              <a href="https://scholar.google.com/citations?user=kMRdKRUAAAAJ&hl=en" class="author-name">Cheng Li</a>
+            </div>
+            <div class="author-block">
+              <img src="profile/anonymous.jpeg" alt="Mingyang Zhang">
+              <a href="https://www.linkedin.com/in/mingyang-zhang/" class="author-name">Mingyang Zhang</a>
+            </div>
+            <div class="author-block">
+              <img src="profile/qiaozhu.jpg" alt="Qiaozhu Mei">
+              <a href="https://websites.umich.edu/~qmei/" class="author-name">Qiaozhu Mei</a>
+            </div>
+            <div class="author-block">
+              <img src="profile/micheal.jpg" alt="Michael Bendersky">
+              <a href="https://bendersky.github.io/" class="author-name">Michael Bendersky</a>
+            </div>
+          </div>
+          <div class="content">
+            <p>
+              While Retrieval-Augmented Generation (RAG) has achieved remarkable success, the retriever is always designed for humans rather than for LLMs, even though the LLM is the actual user of the retrieved information. This paper investigates this mismatch and proposes a novel SFT+RL bridge mechanism to better connect the retriever and the LLM, from retriving human-"friendly" to assembling a LLM-"friendly" context.
+            </p>
+            <p><strong>Published:</strong> ACL, 2024 </p>
+            <div class="project-links">
+              <a href="https://vincent950129.github.io/pdf/bgm_paper.pdf">[Paper]</a>
+              <a href="https://go.screenpal.com/watch/cZiuYsVPCow">[Talk]</a>
+              <a href="https://vincent950129.github.io/pdf/bgm_poster.pdf">[Poster]</a>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- Project Placeholder 2 -->
+        <div class="project-card">
+          <h3 class="title is-4">
+            <a href="#" class="project-title">
+              Continual Pre-training of Language Models
+            </a>
+          </h3>
+          <div class="project-authors">
+            <div class="author-block">
+              <img src="profile/zixuan.jpg" alt="Zixuan Ke">
+              <a href="https://vincent950129.github.io/" class="author-name">Zixuan Ke</a>
+            </div>
+            <div class="author-block">
+              <img src="profile/yijia.jpg" alt="Yijia Shao">
+              <a href="https://cs.stanford.edu/people/shaoyj/" class="author-name">Yijia Shao</a>
+            </div>
+            <div class="author-block">
+              <img src="profile/haowei.jpg" alt="Haowei Lin">
+              <a href="https://linhaowei1.github.io/" class="author-name">Haowei Lin</a>
+            </div>
+            <div class="author-block">
+              <img src="profile/bingliu.jpeg" alt="Bing Liu">
+              <a href="https://www.cs.uic.edu/~liub/" class="author-name">Bing Liu</a>
+            </div>
+          </div>
+          <div class="content">
+            <p>
+              One of the earliest works on continual pre-training of language models. We propose a post-training algorithm with adaptive soft-masking mechanism that selectively updates LM parameters based on the post-training corpus to minimize catastrophic forgetting and enhance knowledge transfer.
+            </p>
+            <p><strong>Published:</strong> ICLR, 2023 </p>
+            <div class="project-links">
+              <a href="https://arxiv.org/abs/2302.03241">[Paper]</a>
+              <a href="https://huggingface.co/UIC-Liu-Lab/DAS-Rest2Cam">[Model]</a>
+              <a href="https://github.com/UIC-Liu-Lab/ContinualLM">[Code]</a>
+              <a href="https://vincent950129.github.io/pdf/das_poster.pdf">[Poster]</a>
+            </div>
+          </div>
+        </div>
+      </div>  
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link" href="https://llm-reasoning-ai.github.io/" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            This means you are free to borrow the <a
+              href="https://github.com/nerfies/nerfies.github.io">source code</a> of this website,
+            we just ask that you link back to this page in the footer.
+            Please remember to remove the analytics code included in the header of the website which
+            you do not want on your website.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

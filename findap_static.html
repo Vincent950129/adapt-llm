@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DL5GXCZE6Z"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-DL5GXCZE6Z');
+</script>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Demystifying Domain-adaptive Post-training for Financial LLMs">
+  <meta name="keywords" content="LLM, Financial, Domain Adaptation, Post-training">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FinDAP: Demystifying Domain-adaptive Post-training for Financial LLMs</title>
+
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+  
+  <script>
+    function toggleSection(sectionId) {
+      const content = document.getElementById(sectionId + '-content');
+      const toggle = document.getElementById(sectionId + '-toggle');
+      
+      if (content.style.display === 'none') {
+        content.style.display = 'block';
+        toggle.textContent = '−';
+        // Add smooth animation
+        content.style.opacity = '0';
+        setTimeout(() => {
+          content.style.transition = 'opacity 0.3s ease';
+          content.style.opacity = '1';
+        }, 10);
+      } else {
+        content.style.transition = 'opacity 0.3s ease';
+        content.style.opacity = '0';
+        setTimeout(() => {
+          content.style.display = 'none';
+          toggle.textContent = '+';
+        }, 300);
+      }
+    }
+    
+    // Add hover effects
+    document.addEventListener('DOMContentLoaded', function() {
+      const headers = document.querySelectorAll('.expandable-header');
+      headers.forEach(header => {
+        header.addEventListener('mouseenter', function() {
+          this.style.transform = 'translateY(-2px)';
+          this.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+        });
+        header.addEventListener('mouseleave', function() {
+          this.style.transform = 'translateY(0)';
+          this.style.boxShadow = 'none';
+        });
+      });
+    });
+  </script>
+</head>
+<body>
+
+<style>
+    .publication-authors {
+        width: 100%;
+        text-align: center;
+    }
+    .author-block img {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+    .author-block {
+        display: inline-block;
+        margin: 10px;
+        text-align: center;
+    }
+    .author-name {
+        display: block;
+        margin-top: 5px;
+        text-decoration: none;
+        color: #3273dc;
+        font-weight: 500;
+    }
+    .author-name:hover {
+        color: #2366d1;
+        text-decoration: underline;
+    }
+    
+    /* Hero section link styling */
+    .hero .author-name {
+        color: rgba(255, 255, 255, 0.95) !important;
+        font-weight: 600;
+    }
+    .hero .author-name:hover {
+        color: #ffffff !important;
+        text-decoration: underline;
+    }
+    
+    /* Hero button styling */
+    .hero-links a {
+        color: white !important;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+    .hero-links a:hover {
+        background: rgba(255, 255, 255, 0.3) !important;
+        transform: translateY(-1px);
+    }
+    /* Ensure superscript styling */
+    sup {
+        vertical-align: super;
+        font-size: smaller;
+    }
+    
+    /* Enhanced hero section */
+    .hero {
+        background: linear-gradient(135deg, #2E8B57 0%, #4169E1 100%);
+        color: white;
+    }
+    .hero .title {
+        color: white;
+        font-weight: 700;
+        margin-bottom: 1rem;
+    }
+    .hero .subtitle {
+        color: rgba(255, 255, 255, 0.9);
+    }
+    
+    /* Research question styling */
+    .research-question {
+        background: #f8f9fa;
+        border: 2px solid #28a745;
+        border-radius: 12px;
+        padding: 2rem;
+        margin: 2rem 0;
+        position: relative;
+    }
+    .research-question::before {
+        content: "🔍";
+        position: absolute;
+        top: -15px;
+        left: 20px;
+        background: #28a745;
+        color: white;
+        padding: 8px 12px;
+        border-radius: 20px;
+        font-size: 1.2rem;
+    }
+    .research-question .title {
+        color: #28a745;
+        margin-bottom: 1.5rem;
+        margin-top: 0.5rem;
+    }
+    .research-question p {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        color: #2c3e50;
+        font-weight: 500;
+    }
+    
+    /* Abstract styling */
+    .abstract-section {
+        background: linear-gradient(145deg, #fff 0%, #f8f9fa 100%);
+        border: 2px solid #6c757d;
+        border-radius: 12px;
+        padding: 2.5rem;
+        margin: 2rem 0;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        position: relative;
+    }
+    .abstract-section::before {
+        content: "📄";
+        position: absolute;
+        top: -15px;
+        left: 20px;
+        background: #6c757d;
+        color: white;
+        padding: 8px 12px;
+        border-radius: 20px;
+        font-size: 1.2rem;
+    }
+    .abstract-section .title {
+        color: #495057;
+        margin-bottom: 1.5rem;
+        margin-top: 0.5rem;
+    }
+    .abstract-section p {
+        font-size: 1.05rem;
+        line-height: 1.7;
+        color: #343a40;
+        text-align: justify;
+    }
+    
+    /* Highlight important terms */
+    .highlight-term {
+        background: linear-gradient(120deg, #a8e6cf 0%, #dcedc1 100%);
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-weight: 600;
+        color: #2d5016;
+    }
+    
+    /* Component badges */
+    .component-badge {
+        display: inline-block;
+        background: #007bff;
+        color: white;
+        padding: 4px 8px;
+        border-radius: 12px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin: 2px 4px;
+    }
+    
+    /* Publication info styling */
+    .publication-info {
+        background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
+        border-radius: 8px;
+        padding: 1rem;
+        margin: 1rem 0;
+        text-align: center;
+        font-weight: 600;
+        color: #2d3436;
+    }
+</style>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-2 publication-title">
+            💰 <span style="font-variant: small-caps;">FinDAP:</span><br />
+            Demystifying Domain-adaptive Post-training for Financial LLMs
+          </h1>
+          
+          <div class="publication-info">
+            EMNLP 2025 🏅 <strong style="color: #d63031;">Oral Presentation (Top 50% of accepted papers)</strong>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <table style="width: 100%;">
+                <tr>
+                    <td class="author-block">
+                        <img src="profile/zixuan.jpg" alt="Zixuan Ke">
+                        <span class="author-info">
+                            <a href="https://vincent950129.github.io/" class="author-name">Zixuan Ke</a>
+                        </span>
+                    </td>                   
+                    <td class="author-block">
+                        <img src="profile/yifei.jpg" alt="Yifei Ming">
+                        <span class="author-info">
+                            <a href="https://alvinmingsf.github.io/" class="author-name">Yifei Ming</a>
+                        </span>
+                    </td>
+                    <td class="author-block">
+                        <img src="profile/phi.png" alt="Xuan-Phi Nguyen">
+                        <span class="author-info">
+                            <a href="https://nxphi47.github.io/" class="author-name">Xuan-Phi Nguyen</a>
+                        </span>
+                    </td>
+                    <td class="author-block">
+                      <img src="profile/caiming.jpg" alt="Caiming Xiong">
+                        <span class="author-info">
+                            <a href="http://cmxiong.com/" class="author-name">Caiming Xiong</a>
+                        </span>
+                    </td>
+                    <td class="author-block">
+                      <img src="profile/shafiq.jpg" alt="Shafiq Joty">
+                        <span class="author-info">
+                            <a href="https://raihanjoty.github.io/" class="author-name">Shafiq Joty</a>
+                        </span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="is-size-6 publication-authors">
+          <span style="color: rgba(255, 255, 255, 0.9);">Salesforce AI Research</span>
+        </div>
+
+        <div class="is-size-5 publication-authors hero-links" style="margin-top: 2rem;">
+          <a href="https://arxiv.org/abs/2501.04961" style="font-size: 1.5rem; font-weight: 600; margin: 0 1rem; text-decoration: none; background: rgba(255, 255, 255, 0.2); padding: 0.5rem 1rem; border-radius: 6px;">[📄 Paper]</a>
+          <a href="https://huggingface.co/datasets/Salesforce/FinEval" style="font-size: 1.5rem; font-weight: 600; margin: 0 1rem; text-decoration: none; background: rgba(255, 255, 255, 0.2); padding: 0.5rem 1rem; border-radius: 6px;">[🤗 FinEval]</a>
+          <a href="https://github.com/SalesforceAIResearch/FinDAP" style="font-size: 1.5rem; font-weight: 600; margin: 0 1rem; text-decoration: none; background: rgba(255, 255, 255, 0.2); padding: 0.5rem 1rem; border-radius: 6px;">[💻 Code]</a>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        
+        <!-- Research Questions Section -->
+        <div class="research-question">
+          <h2 class="title is-3">Research Questions</h2>
+          <div class="content">
+            <p>
+              Given a strong general-purpose LLM (e.g., <strong>Llama3-8b-inst</strong>), how can we effectively adapt it to a target domain (e.g., <strong>finance</strong>) through post-training?
+            </p>
+            <div style="margin: 1.5rem 0;">
+              <p style="margin-bottom: 0.8rem;"><strong>Key Questions We Address:</strong></p>
+              <ul style="margin-left: 1.5rem;">
+                <li><strong>What criteria are desirable for successful adaptation?</strong></li>
+                <li><strong>What are the most effective training recipes with respect to data and model?</strong></li>
+                <li><strong>How do different post-training stages contribute to domain expertise?</strong></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Abstract Section -->
+        <div class="abstract-section">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content">
+            <p>
+              Domain-adaptive post-training of large language models (LLMs) has emerged as a promising approach for specialized domains such as medicine and finance. However, significant challenges remain in identifying optimal adaptation criteria and training strategies across varying data and model configurations.
+            </p>
+            <p>
+              To address these challenges, we introduce <span class="highlight-term">FinDAP</span>, a systematic and fine-grained investigation into domain-adaptive post-training of LLMs for the finance domain. Our approach consists of four key components:
+            </p>
+            <div style="margin: 1.5rem 0; padding: 1rem; background: rgba(0, 123, 255, 0.05); border-radius: 8px;">
+              <p><span class="component-badge">FinCap</span> defines the core capabilities required for the target domain</p>
+              <p><span class="component-badge">FinRec</span> provides an effective training recipe that jointly optimizes continual pre-training and instruction-following, along with a novel preference data distillation method leveraging process signals from a generative reward model</p>
+              <p><span class="component-badge">FinTrain</span> offers a curated set of training datasets supporting FinRec</p>
+              <p><span class="component-badge">FinEval</span> delivers a comprehensive evaluation suite aligned with FinCap</p>
+            </div>
+            <p>
+              The resulting model, <strong>Llama-Fin</strong>, achieves state-of-the-art performance across a wide range of financial tasks. Our analysis also highlights how each post-training stage contributes to distinct capabilities, uncovering specific challenges and effective solutions, providing valuable insights for domain adaptation of LLMs.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Key Contributions Section -->
+<section class="section" style="background: #f8f9fa;">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3 has-text-centered" style="color: #495057; margin-bottom: 2rem;">🎯 Key Contributions</h2>
+        
+        <div class="columns">
+          <div class="column">
+            <div style="background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); height: 100%;">
+              <h4 style="color: #007bff; font-weight: 600; margin-bottom: 1rem;">📊 Comprehensive guidance</h4>
+              <p>for finance-specific post-training, including identification of capabilities, evaluation, data and model recipe design.</p>
+            </div>
+          </div>
+          <div class="column">
+            <div style="background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); height: 100%;">
+              <h4 style="color: #28a745; font-weight: 600; margin-bottom: 1rem;">🔬 Systematic exploration</h4>
+              <p>on each stage of post-training, with an emphasis on the goals, challenges and effective approaches.</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="columns">
+          <div class="column">
+            <div style="background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); height: 100%;">
+              <h4 style="color: #ffc107; font-weight: 600; margin-bottom: 1rem;">📈 Novel preference alignment approach</h4>
+              <p>that constructs preference data using on-policy trajectories guided by outcome and process signals.</p>
+            </div>
+          </div>
+          <div class="column">
+            <div style="background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); height: 100%;">
+              <h4 style="color: #dc3545; font-weight: 600; margin-bottom: 1rem;">💡 New State-of-the-art financial LLM </h4>
+              <p>(Llama-Fin) at the 8b parameter scale based on the above.</p>
+            </div>
+          </div>
+                </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Framework Overview Section -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3 has-text-centered" style="color: #495057; margin-bottom: 2rem;">🏗️ FinDAP Framework Overview</h2>
+        
+        <div style="background: white; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.1); padding: 2rem; margin: 2rem 0;">
+          <figure class="has-text-centered">
+            <img src="fig/findap_overview.png" alt="FinDAP Framework Overview" style="width: 100%; max-width: 900px; height: auto; border-radius: 8px; border: 1px solid #e9ecef;">
+            <figcaption style="text-align: center; margin-top: 1rem; color: #6c757d; font-size: 0.95rem;">
+              <strong>Figure 1:</strong> FinDAP framework overview with four key components
+            </figcaption>
+          </figure>
+        </div>
+
+        <!-- Integrated Explore Components -->
+        <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 2px dashed #dee2e6;">
+          <div class="has-text-centered" style="margin-bottom: 1rem;">
+            <span style="color: #007bff; font-size: 1.2rem;">⬇️</span>
+            <span style="color: #6c757d; font-style: italic; margin: 0 0.5rem;">Interactive Component Details</span>
+            <span style="color: #007bff; font-size: 1.2rem;">⬇️</span>
+          </div>
+          <h3 class="title is-4 has-text-centered" style="color: #495057; margin-bottom: 1rem;">🔍 Explore Each Component</h3>
+          <p class="has-text-centered" style="color: #6c757d; margin-bottom: 1.5rem;">
+            Click below to dive deeper into the methodologies and technical details of each framework component
+          </p>
+        
+        <!-- FinCap Expandable Section -->
+        <div class="expandable-section" style="margin-bottom: 1.5rem;">
+          <div class="expandable-header" onclick="toggleSection('fincap')" style="background: linear-gradient(135deg, #e8f5e8 0%, #f0f8f0 100%); padding: 1.5rem; border-radius: 8px; border-left: 4px solid #28a745; cursor: pointer; transition: all 0.3s ease;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <h3 style="color: #28a745; font-weight: 600; margin: 0;">🎯 FinCap: Financial Capabilities Framework</h3>
+              <span id="fincap-toggle" style="color: #28a745; font-size: 1.5rem; font-weight: bold;">+</span>
+            </div>
+            <p style="margin: 0.5rem 0 0 0; color: #495057; font-size: 0.95rem;">Systematic identification and definition of core financial LLM capabilities</p>
+          </div>
+          <div id="fincap-content" class="expandable-content" style="display: none; background: #f8f9fa; padding: 2rem; border-radius: 0 0 8px 8px; border-left: 4px solid #28a745;">
+            <div class="content">
+              <h4 style="color: #28a745; margin-bottom: 1rem;">📋 Capability Categories</h4>
+              <div class="columns">
+                <div class="column">
+                  <div style="background: white; padding: 1rem; border-radius: 6px; margin-bottom: 1rem;">
+                    <h5 style="color: #007bff; font-weight: 600;">💡 Concepts</h5>
+                    <p style="font-size: 0.9rem;">Financial terminology, definitions, and domain-specific knowledge</p>
+                  </div>
+                  <div style="background: white; padding: 1rem; border-radius: 6px;">
+                    <h5 style="color: #007bff; font-weight: 600;">🧠 Reasoning</h5>
+                    <p style="font-size: 0.9rem;">Mathematical calculations, logical inference, and analytical thinking</p>
+                  </div>
+                </div>
+                <div class="column">
+                  <div style="background: white; padding: 1rem; border-radius: 6px; margin-bottom: 1rem;">
+                    <h5 style="color: #007bff; font-weight: 600;">💬 Instruction Following</h5>
+                    <p style="font-size: 0.9rem;">Understanding and executing financial task instructions</p>
+                  </div>
+                  <div style="background: white; padding: 1rem; border-radius: 6px;">
+                    <h5 style="color: #007bff; font-weight: 600;">📈 Tasks</h5>
+                    <p style="font-size: 0.9rem;">Domain-specific financial tasks and applications</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- FinRec Expandable Section -->
+        <div class="expandable-section" style="margin-bottom: 1.5rem;">
+          <div class="expandable-header" onclick="toggleSection('finrec')" style="background: linear-gradient(135deg, #fff3cd 0%, #fef8e1 100%); padding: 1.5rem; border-radius: 8px; border-left: 4px solid #e67e22; cursor: pointer; transition: all 0.3s ease;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <h3 style="color: #e67e22; font-weight: 600; margin: 0;">🔧 FinRec: Training Recipe & Methodology</h3>
+              <span id="finrec-toggle" style="color: #e67e22; font-size: 1.5rem; font-weight: bold;">+</span>
+            </div>
+            <p style="margin: 0.5rem 0 0 0; color: #495057; font-size: 0.95rem;">Advanced training strategies and novel preference alignment techniques</p>
+          </div>
+          <div id="finrec-content" class="expandable-content" style="display: none; background: #f8f9fa; padding: 2rem; border-radius: 0 0 8px 8px; border-left: 4px solid #e67e22;">
+            <div class="content">
+              <h4 style="color: #e67e22; margin-bottom: 1rem;">🏗️ Training Pipeline</h4>
+              <div style="background: white; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem;">
+                <h5 style="color: #007bff; font-weight: 600;">Joint CPT + IT Training</h5>
+                <p>Seamless integration of Continual Pre-Training and Instruction Tuning phases</p>
+              </div>
+              <div style="background: white; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem;">
+                <h5 style="color: #007bff; font-weight: 600;">Novel Preference Alignment</h5>
+                <p>On-policy trajectory construction using both outcome and process signals from generative reward models</p>
+              </div>
+              <div style="background: white; padding: 1.5rem; border-radius: 8px;">
+                <h5 style="color: #007bff; font-weight: 600;">Data & Model Recipe</h5>
+                <p>Systematic approach to data mixing, model scaling, and training optimization</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- FinTrain Expandable Section -->
+        <div class="expandable-section" style="margin-bottom: 1.5rem;">
+          <div class="expandable-header" onclick="toggleSection('fintrain')" style="background: linear-gradient(135deg, #d1ecf1 0%, #e8f4f8 100%); padding: 1.5rem; border-radius: 8px; border-left: 4px solid #17a2b8; cursor: pointer; transition: all 0.3s ease;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <h3 style="color: #17a2b8; font-weight: 600; margin: 0;">📚 FinTrain: Curated Training Data</h3>
+              <span id="fintrain-toggle" style="color: #17a2b8; font-size: 1.5rem; font-weight: bold;">+</span>
+            </div>
+            <p style="margin: 0.5rem 0 0 0; color: #495057; font-size: 0.95rem;">Systematically curated datasets for optimal financial domain adaptation</p>
+          </div>
+          <div id="fintrain-content" class="expandable-content" style="display: none; background: #f8f9fa; padding: 2rem; border-radius: 0 0 8px 8px; border-left: 4px solid #17a2b8;">
+            <div class="content">
+              <h4 style="color: #17a2b8; margin-bottom: 1rem;">📊 Data Categories</h4>
+              <div class="columns">
+                <div class="column">
+                  <div style="background: white; padding: 1rem; border-radius: 6px; margin-bottom: 1rem;">
+                    <h5 style="color: #007bff; font-weight: 600;">📖 Curated Texts</h5>
+                    <ul style="font-size: 0.9rem; margin-left: 1rem;">
+                      <li>Verifiable financial texts</li>
+                      <li>Web-scraped financial content</li>
+                      <li>Financial textbooks and literature</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="column">
+                  <div style="background: white; padding: 1rem; border-radius: 6px; margin-bottom: 1rem;">
+                    <h5 style="color: #007bff; font-weight: 600;">💬 Curated Prompts</h5>
+                    <ul style="font-size: 0.9rem; margin-left: 1rem;">
+                      <li>General financial tasks</li>
+                      <li>Domain-specific challenges</li>
+                      <li>Reasoning exercises</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- FinEval Expandable Section -->
+        <div class="expandable-section" style="margin-bottom: 2rem;">
+          <div class="expandable-header" onclick="toggleSection('fineval')" style="background: linear-gradient(135deg, #f8d7da 0%, #fce8ea 100%); padding: 1.5rem; border-radius: 8px; border-left: 4px solid #dc3545; cursor: pointer; transition: all 0.3s ease;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <h3 style="color: #dc3545; font-weight: 600; margin: 0;">📊 FinEval: Comprehensive Evaluation Suite</h3>
+              <span id="fineval-toggle" style="color: #dc3545; font-size: 1.5rem; font-weight: bold;">+</span>
+            </div>
+            <p style="margin: 0.5rem 0 0 0; color: #495057; font-size: 0.95rem;">Multi-dimensional evaluation framework for financial LLM assessment</p>
+          </div>
+          <div id="fineval-content" class="expandable-content" style="display: none; background: #f8f9fa; padding: 2rem; border-radius: 0 0 8px 8px; border-left: 4px solid #dc3545;">
+            <div class="content">
+              <h4 style="color: #dc3545; margin-bottom: 1rem;">📈 Evaluation Dimensions</h4>
+              <div class="columns">
+                <div class="column">
+                  <div style="background: white; padding: 1rem; border-radius: 6px; margin-bottom: 1rem;">
+                    <h5 style="color: #007bff; font-weight: 600;">🔄 Task Types</h5>
+                    <ul style="font-size: 0.9rem; margin-left: 1rem;">
+                      <li><strong>Similar:</strong> Tasks seen during training</li>
+                      <li><strong>Novel:</strong> Unseen task categories</li>
+                    </ul>
+                  </div>
+                  <div style="background: white; padding: 1rem; border-radius: 6px;">
+                    <h5 style="color: #007bff; font-weight: 600;">🎯 Task Categories</h5>
+                    <ul style="font-size: 0.9rem; margin-left: 1rem;">
+                      <li>General tasks</li>
+                      <li>Domain-specific tasks</li>
+                      <li>Reasoning tasks</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="column">
+                  <div style="background: white; padding: 1rem; border-radius: 6px;">
+                    <h5 style="color: #007bff; font-weight: 600;">📝 Evaluation Methods</h5>
+                    <ul style="font-size: 0.9rem; margin-left: 1rem;">
+                      <li><strong>Direct Answer:</strong> Immediate response evaluation</li>
+                      <li><strong>Chain-of-Thought:</strong> Step-by-step reasoning assessment</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Call to Action Section -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths has-text-centered">
+        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 2rem; border-radius: 12px;">
+          <h3 class="title is-4" style="color: white; margin-bottom: 1rem;">🚀 Explore Our Work</h3>
+          <p style="font-size: 1.1rem; margin-bottom: 1.5rem;">
+            Dive deep into our systematic approach to financial LLM adaptation
+          </p>
+          <div>
+            <a href="https://arxiv.org/abs/2501.04961" class="button is-light is-large" style="margin: 0.5rem;">
+              <span class="icon"><i class="fas fa-file-pdf"></i></span>
+              <span>Read Paper</span>
+            </a>
+            <a href="https://huggingface.co/datasets/Salesforce/FinEval" class="button is-light is-large" style="margin: 0.5rem;">
+              <span class="icon"><i class="fas fa-database"></i></span>
+              <span>FinEval Dataset</span>
+            </a>
+            <a href="https://github.com/SalesforceAIResearch/FinDAP" class="button is-light is-large" style="margin: 0.5rem;">
+              <span class="icon"><i class="fab fa-github"></i></span>
+              <span>Code & Models</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title has-text-centered">📝 Citation</h2>
+    <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 8px; border-left: 4px solid #007bff;">
+      <pre style="background: transparent; font-size: 0.9rem;"><code>@misc{ke2025demystifyingdomainadaptiveposttrainingfinancial,
+  title={Demystifying Domain-adaptive Post-training for Financial LLMs}, 
+  author={Zixuan Ke and Yifei Ming and Xuan-Phi Nguyen and Caiming Xiong and Shafiq Joty},
+  year={2025},
+  eprint={2501.04961},
+  archivePrefix={arXiv},
+  primaryClass={cs.CL},
+  url={https://arxiv.org/abs/2501.04961}, 
+}</code></pre>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link" href="https://github.com/SalesforceAIResearch/FinDAP" class="external-link">
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
