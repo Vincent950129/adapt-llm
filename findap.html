@@ -209,6 +209,30 @@
         background: rgba(255, 255, 255, 0.3) !important;
         transform: translateY(-1px);
     }
+    
+    /* Clean hero links container */
+    .hero-links-container {
+        margin-top: 2rem;
+        text-align: center;
+    }
+    
+    .hero-link {
+        display: inline-block;
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin: 0 1rem;
+        padding: 0.5rem 1rem;
+        color: white !important;
+        text-decoration: none;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 6px;
+        transition: all 0.3s ease;
+    }
+    
+    .hero-link:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: translateY(-1px);
+    }
     /* Ensure superscript styling */
     sup {
         vertical-align: super;
@@ -405,11 +429,13 @@
           <span style="color: rgba(255, 255, 255, 0.9);">Salesforce AI Research</span>
           </div>
 
-        <div class="is-size-5 publication-authors hero-links" style="margin-top: 2rem;">
-          <a href="https://arxiv.org/abs/2501.04961" style="font-size: 1.5rem; font-weight: 600; margin: 0 1rem; text-decoration: none; background: rgba(255, 255, 255, 0.2); padding: 0.5rem 1rem; border-radius: 6px;">[📄 Paper]</a>
-          <a href="https://huggingface.co/datasets/Salesforce/FinEval" style="font-size: 1.5rem; font-weight: 600; margin: 0 1rem; text-decoration: none; background: rgba(255, 255, 255, 0.2); padding: 0.5rem 1rem; border-radius: 6px;">[🤗 FinEval]</a>
-          <a href="https://github.com/SalesforceAIResearch/FinDAP" style="font-size: 1.5rem; font-weight: 600; margin: 0 1rem; text-decoration: none; background: rgba(255, 255, 255, 0.2); padding: 0.5rem 1rem; border-radius: 6px;">[💻 Code]</a>
-          </div>
+        <div class="hero-links-container">
+          <a href="https://arxiv.org/abs/2501.04961" class="hero-link">[📄 Paper]</a>
+          <a href="https://huggingface.co/Salesforce/Llama-Fin-8b" class="hero-link">[🤗 Llama-Fin-8b]</a>
+          <a href="https://huggingface.co/datasets/Salesforce/FinTrain" class="hero-link">[🤗 FinTrain]</a>
+          <a href="https://huggingface.co/datasets/Salesforce/FinEval" class="hero-link">[🤗 FinEval]</a>
+          <a href="https://github.com/SalesforceAIResearch/FinDAP" class="hero-link">[💻 Code]</a>
+        </div>
         </div>
       </div>
     </div>
