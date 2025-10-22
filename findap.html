@@ -325,6 +325,20 @@
         font-weight: 600;
         color: #2d3436;
     }
+    
+    /* Enhanced button hover effects */
+    .button.is-light.is-medium:hover,
+    .button.is-light.is-large:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 6px 16px rgba(0,0,0,0.2) !important;
+        background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%) !important;
+    }
+    
+    .button.is-light.is-medium:active,
+    .button.is-light.is-large:active {
+        transform: translateY(0) !important;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15) !important;
+    }
 </style>
 
 <nav class="navbar" role="navigation" aria-label="main navigation">
@@ -348,7 +362,7 @@
             </h1>
           
           <div class="publication-info">
-            EMNLP 2025 🏅 <strong style="color: #d63031;">Oral Presentation (Top 50% of accepted papers)</strong>
+            EMNLP 2025 🏅 <strong style="color: #d63031;">Oral Presentation (Top 50% of accepted papers, ARR best paper nomination)</strong>
           </div>
 
             <div class="is-size-5 publication-authors">
@@ -733,27 +747,32 @@
   <div class="container is-max-desktop">
     <div class="columns is-centered">
       <div class="column is-four-fifths has-text-centered">
-        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 2rem; border-radius: 12px;">
+        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.1);">
           <h3 class="title is-4" style="color: white; margin-bottom: 1rem;">🚀 Explore Our Work</h3>
-          <p style="font-size: 1.1rem; margin-bottom: 1.5rem;">
+          <p style="font-size: 1.1rem; margin-bottom: 1.5rem; opacity: 0.9;">
             Dive deep into our systematic approach to financial LLM adaptation
           </p>
-          <div>
-            <a href="https://arxiv.org/abs/2501.04961" class="button is-light is-large" style="margin: 0.5rem;">
-              <span class="icon"><i class="fas fa-file-pdf"></i></span>
-              <span>Read Paper</span>
+          
+          <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem;">
+            <a href="https://arxiv.org/abs/2501.04961" class="button is-light is-medium" style="margin: 0.25rem; padding: 0.75rem 1.25rem; border-radius: 8px; font-weight: 600; transition: all 0.3s ease;">
+              <span class="icon"><i class="fas fa-file-pdf" style="color: #e74c3c;"></i></span>
+              <span>Paper</span>
             </a>
-            <a href="https://huggingface.co/datasets/Salesforce/FinEval" class="button is-light is-large" style="margin: 0.5rem;">
-              <span class="icon"><i class="fas fa-database"></i></span>
-              <span>FinEval Dataset</span>
+            <a href="https://huggingface.co/datasets/Salesforce/FinEval" class="button is-light is-medium" style="margin: 0.25rem; padding: 0.75rem 1.25rem; border-radius: 8px; font-weight: 600; transition: all 0.3s ease;">
+              <span class="icon"><i class="fas fa-database" style="color: #3498db;"></i></span>
+              <span>FinEval</span>
             </a>
-            <!-- <a href="https://huggingface.co/datasets/Salesforce/FinTrain" class="button is-light is-large" style="margin: 0.5rem;">
-              <span class="icon"><i class="fas fa-database"></i></span>
-              <span>FinTrain Dataset</span>
-            </a> -->
-            <a href="https://github.com/SalesforceAIResearch/FinDAP" class="button is-light is-large" style="margin: 0.5rem;">
-              <span class="icon"><i class="fab fa-github"></i></span>
-              <span>Code & Models</span>
+            <a href="https://huggingface.co/datasets/Salesforce/FinTrain" class="button is-light is-medium" style="margin: 0.25rem; padding: 0.75rem 1.25rem; border-radius: 8px; font-weight: 600; transition: all 0.3s ease;">
+              <span class="icon"><i class="fas fa-database" style="color: #2ecc71;"></i></span>
+              <span>FinTrain</span>
+            </a>
+            <a href="https://huggingface.co/SalesforceAIResearch/Llama-Fin-8B" class="button is-light is-medium" style="margin: 0.25rem; padding: 0.75rem 1.25rem; border-radius: 8px; font-weight: 600; transition: all 0.3s ease;">
+              <span class="icon"><i class="fas fa-robot" style="color: #9b59b6;"></i></span>
+              <span>Llama-Fin-8B</span>
+            </a>
+            <a href="https://github.com/SalesforceAIResearch/FinDAP" class="button is-light is-medium" style="margin: 0.25rem; padding: 0.75rem 1.25rem; border-radius: 8px; font-weight: 600; transition: all 0.3s ease;">
+              <span class="icon"><i class="fab fa-github" style="color: #333;"></i></span>
+              <span>Code</span>
             </a>
           </div>
         </div>
